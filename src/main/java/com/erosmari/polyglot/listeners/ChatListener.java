@@ -2,7 +2,7 @@ package com.erosmari.polyglot.listeners;
 
 import com.erosmari.polyglot.utils.DeepLTranslator;
 import com.erosmari.polyglot.utils.LanguageManager;
-import com.erosmari.polyglot.utils.LoggingUtils;
+import com.erosmari.polyglot.utils.TranslationHandler;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.Bukkit;
@@ -34,8 +34,7 @@ public class ChatListener implements Listener {
                 continue;
             }
 
-            LoggingUtils.sendAndLog(recipient,"translate.test", sender.getName(), translatedMessage);
-            recipient.sendMessage("[Polyglot] " + sender.getName() + ": " + translatedMessage);
+            TranslationHandler.getPlayerMessage("translate.test", sender.getName(), translatedMessage);
         }
     }
 }
