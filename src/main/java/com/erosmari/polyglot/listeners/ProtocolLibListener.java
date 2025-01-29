@@ -7,6 +7,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.erosmari.polyglot.utils.DeepLTranslator;
 import com.erosmari.polyglot.utils.LanguageManager;
+import com.erosmari.polyglot.utils.LoggingUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.entity.Player;
@@ -35,7 +36,7 @@ public class ProtocolLibListener {
                 Player recipient = event.getPlayer();
                 String recipientLang = LanguageManager.getPlayerLanguage(recipient);
 
-                if (event.getPacket().getStrings().size() > 0) { // ✅ FIXED
+                if (event.getPacket().getStrings().size() > 0) {
                     String originalMessage = event.getPacket().getStrings().read(0);
 
                     if (!recipientLang.equalsIgnoreCase("auto")) {
@@ -62,7 +63,7 @@ public class ProtocolLibListener {
                 String recipientLang = LanguageManager.getPlayerLanguage(recipient);
 
                 try {
-                    if (event.getPacket().getStrings().size() > 0) { // ✅ FIXED
+                    if (event.getPacket().getStrings().size() > 0) {
                         String originalMessage = event.getPacket().getStrings().read(0);
 
                         if (!recipientLang.equalsIgnoreCase("auto")) {
@@ -72,7 +73,7 @@ public class ProtocolLibListener {
                         }
                     }
                 } catch (Exception e) {
-                    plugin.getLogger().warning("Error translating action bar message: " + e.getMessage());
+                    LoggingUtils.logTranslated("translate.error.action_bar", e.getMessage());
                 }
             }
         });
@@ -85,7 +86,7 @@ public class ProtocolLibListener {
                 String recipientLang = LanguageManager.getPlayerLanguage(recipient);
 
                 try {
-                    if (event.getPacket().getStrings().size() > 0) { // ✅ FIXED
+                    if (event.getPacket().getStrings().size() > 0) {
                         String originalTitle = event.getPacket().getStrings().read(0);
 
                         if (!recipientLang.equalsIgnoreCase("auto")) {
@@ -95,7 +96,7 @@ public class ProtocolLibListener {
                         }
                     }
                 } catch (Exception e) {
-                    plugin.getLogger().warning("Error translating title: " + e.getMessage());
+                    LoggingUtils.logTranslated("translate.error.title", e.getMessage());
                 }
             }
         });
@@ -108,7 +109,7 @@ public class ProtocolLibListener {
                 String recipientLang = LanguageManager.getPlayerLanguage(recipient);
 
                 try {
-                    if (event.getPacket().getStrings().size() > 0) { // ✅ FIXED
+                    if (event.getPacket().getStrings().size() > 0) {
                         String originalSubtitle = event.getPacket().getStrings().read(0);
 
                         if (!recipientLang.equalsIgnoreCase("auto")) {
@@ -118,7 +119,7 @@ public class ProtocolLibListener {
                         }
                     }
                 } catch (Exception e) {
-                    plugin.getLogger().warning("Error translating subtitle: " + e.getMessage());
+                    LoggingUtils.logTranslated("translate.error.subtitle", e.getMessage());
                 }
             }
         });
@@ -141,7 +142,7 @@ public class ProtocolLibListener {
                         }
                     }
                 } catch (Exception e) {
-                    plugin.getLogger().warning("Error translating system chat message: " + e.getMessage());
+                    LoggingUtils.logTranslated("translate.error.system_chat", e.getMessage());
                 }
             }
         });

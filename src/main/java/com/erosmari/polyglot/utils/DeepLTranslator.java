@@ -1,8 +1,6 @@
 package com.erosmari.polyglot.utils;
 
 import com.erosmari.polyglot.Polyglot;
-import org.bukkit.Bukkit;
-
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -26,6 +24,7 @@ public class DeepLTranslator {
 
         String apiKey = Polyglot.getInstance().getConfig().getString("deepl.api_key", "");
         if (apiKey.isEmpty()) {
+            LoggingUtils.logTranslated("translate.error.missing_api_key");
             return text;
         }
 
@@ -53,7 +52,7 @@ public class DeepLTranslator {
             return translatedText;
 
         } catch (Exception e) {
-            Bukkit.getLogger().warning("Error al traducir con DeepL: " + e.getMessage());
+            LoggingUtils.logTranslated("translate.error.request_failed", e.getMessage());
             return text;
         }
     }
@@ -62,7 +61,8 @@ public class DeepLTranslator {
         int indexStart = json.indexOf("\"text\":\"") + 8;
         int indexEnd = json.indexOf("\"}", indexStart);
         if (indexStart < 8 || indexEnd < 0) {
-            return "Error en la traducción";
+            LoggingUtils.logTranslated("translate.error.invalid_response");
+            return "";
         }
         return json.substring(indexStart, indexEnd);
     }

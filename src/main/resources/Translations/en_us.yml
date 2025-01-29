@@ -1,0 +1,77 @@
+#  ███████████           ████                      ████            █████
+# ░░███░░░░░███         ░░███                     ░░███           ░░███
+#  ░███    ░███  ██████  ░███  █████ ████  ███████ ░███   ██████  ███████
+#  ░██████████  ███░░███ ░███ ░░███ ░███  ███░░███ ░███  ███░░███░░░███░
+#  ░███░░░░░░  ░███ ░███ ░███  ░███ ░███ ░███ ░███ ░███ ░███ ░███  ░███
+#  ░███        ░███ ░███ ░███  ░███ ░███ ░███ ░███ ░███ ░███ ░███  ░███ ███
+#  █████       ░░██████  █████ ░░███████ ░░███████ █████░░██████   ░░█████
+# ░░░░░         ░░░░░░  ░░░░░   ░░░░░███  ░░░░░███░░░░░  ░░░░░░     ░░░░░
+#                               ███ ░███  ███ ░███
+#                              ░░██████  ░░██████
+#                               ░░░░░░    ░░░░░░
+
+
+# Support: https://erosmari.com/discord
+# Documentation: https://github.com/soystargaze/Polyglot
+
+# Translations for Polyglot plugin (English - en_us.yml)
+
+plugin:
+  separator: "----------------------------------------"
+  name: "Polyglot Plugin"
+  version: "Version: {0}"
+  author: "Author: {0}"
+  enabled: "Polyglot has been enabled!"
+  disabled: "Polyglot has been disabled!"
+  enable_error: "An error occurred while enabling Polyglot: {0}"
+
+database:
+  init_error: "Database initialization failed: {0}"
+  init_fatal_error: "Fatal error: Unable to initialize database."
+  init:
+    already_initialized: "The database is already initialized."
+    error: "Error initializing the database: {0}"
+    failed: "Fatal error: Database initialization failed."
+
+  sqlite:
+    error_directory: "§cFailed to create the database directory: {0}"
+
+  tables:
+    error: "Error creating database tables: {0}"
+
+  connection:
+    uninitialized: "Database connection is not initialized."
+
+  language:
+    save_error: "Error saving player language: {0}"
+    load_error: "Error loading player language: {0}"
+
+  close:
+    success: "Database connection pool closed successfully."
+
+command:
+  register_error: "Error while registering commands: {0}"
+  only_players: "This command can only be used by players."
+  lang:
+    invalid: "Invalid language. Available languages: en, es, fr, de, it, pt, ru, ja, zh."
+    set: "Your language has been set to {0}."
+  reload:
+    success: "Configuration and translations reloaded successfully! Loaded translations: {0}"
+    error: "An error occurred while reloading the configuration and translations."
+
+events:
+  register_error: "Error while registering event listeners: {0}"
+
+translations:
+  folder_error: "Failed to create translations folder."
+  language_not_found: "Language not found: {0}"
+
+translate:
+  error:
+    missing_api_key: "§cDeepL API key is missing. Please set it in the config."
+    request_failed: "§cTranslation request failed: {0}"
+    invalid_response: "§cReceived an invalid response from DeepL."
+    action_bar: "§cError translating action bar message: {0}"
+    title: "§cError translating title: {0}"
+    subtitle: "§cError translating subtitle: {0}"
+    system_chat: "§cError translating system chat message: {0}"
