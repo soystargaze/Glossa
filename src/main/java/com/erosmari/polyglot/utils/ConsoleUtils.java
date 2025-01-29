@@ -41,8 +41,6 @@ public class ConsoleUtils {
         LoggingUtils.logTranslated("plugin.enabled");
         LoggingUtils.logTranslated("plugin.language_loaded", TranslationHandler.getActiveLanguage(), loadedKeys);
         LoggingUtils.logTranslated("database.initialized");
-        LoggingUtils.logTranslated("items.registered");
-        LoggingUtils.logTranslated("mobs.protected_areas_loaded");
         LoggingUtils.logTranslated("command.registered");
         LoggingUtils.logTranslated("events.registered");
         LoggingUtils.logTranslated("plugin.separator");
