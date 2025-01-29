@@ -1,69 +1,103 @@
 package com.erosmari.polyglot.utils;
 
-import com.erosmari.polyglot.Polyglot;
-import java.io.OutputStream;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.erosmari.polyglot.config.ConfigHandler;
+import org.bukkit.Bukkit;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
+import java.nio.charset.StandardCharsets;
+import java.net.URLEncoder;
 
 public class DeepLTranslator {
-    private static final Map<String, String> translationCache = new ConcurrentHashMap<>();
 
     public static String translate(String text, String targetLang) {
-        return translate(text, targetLang, "auto");
-    }
+        String apiKey = ConfigHandler.getDeepLApiKey();
+        String apiUrl = ConfigHandler.getDeepLApiUrl();
 
-    public static String translate(String text, String targetLang, String sourceLang) {
-        String cacheKey = text + "|" + targetLang;
-        if (translationCache.containsKey(cacheKey)) {
-            return translationCache.get(cacheKey);
-        }
-
-        String apiKey = Polyglot.getInstance().getConfig().getString("deepl.api_key", "");
-        if (apiKey.isEmpty()) {
-            LoggingUtils.logTranslated("translate.error.missing_api_key");
-            return text;
+        if (apiKey == null || apiKey.isEmpty()) {
+            return "§c[Error] No API Key found in config.yml!";
         }
 
         try {
-            URL url = URI.create("https://api-free.deepl.com/v2/translate").toURL();
+            // 🔹 Codificar el texto para la URL
+            String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
+            URI uri = new URI(apiUrl + "?auth_key=" + apiKey + "&text=" + encodedText + "&target_lang=" + targetLang);
+            URL url = uri.toURL();
+
+            // 🔹 Configurar conexión HTTP segura
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "DeepL-Auth-Key " + apiKey);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setDoOutput(true);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("User-Agent", "Polyglot/1.0"); // Evita bloqueos por la API
 
-            String params = "text=" + text + "&target_lang=" + targetLang.toUpperCase() + "&source_lang=" + sourceLang.toUpperCase();
-            OutputStream os = conn.getOutputStream();
-            os.write(params.getBytes());
-            os.flush();
-            os.close();
+            int responseCode = conn.getResponseCode();
+            if (responseCode != 200) {
+                Bukkit.getLogger().warning("[Polyglot] DeepL API error: " + responseCode);
+                return "§c[Error] Translation service unavailable (Code: " + responseCode + ")";
+            }
 
-            Scanner scanner = new Scanner(conn.getInputStream());
-            String response = scanner.useDelimiter("\\A").next();
-            scanner.close();
+            // 🔹 Leer la respuesta
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                response.append(line);
+            }
+            in.close();
 
-            String translatedText = extractTranslatedText(response);
-            translationCache.put(cacheKey, translatedText);
-
-            return translatedText;
+            return parseTranslatedText(response.toString());
 
         } catch (Exception e) {
-            LoggingUtils.logTranslated("translate.error.request_failed", e.getMessage());
-            return text;
+            Bukkit.getLogger().severe("[Polyglot] Translation failed: " + e.getMessage());
+            return "§c[Error] Translation failed!";
         }
     }
 
-    private static String extractTranslatedText(String json) {
-        int indexStart = json.indexOf("\"text\":\"") + 8;
-        int indexEnd = json.indexOf("\"}", indexStart);
-        if (indexStart < 8 || indexEnd < 0) {
-            LoggingUtils.logTranslated("translate.error.invalid_response");
-            return "";
+    private static String parseTranslatedText(String json) {
+        try {
+            if (json == null || json.trim().isEmpty()) {
+                Bukkit.getLogger().warning("[Polyglot] Warning: Received an empty response from DeepL.");
+                return "§c[Error] Translation service returned an empty response!";
+            }
+
+            // 🔹 Parsear JSON de forma segura usando Gson
+            JsonElement jsonElement = JsonParser.parseString(json);
+            if (!jsonElement.isJsonObject()) {
+                Bukkit.getLogger().warning("[Polyglot] Warning: DeepL response is not a valid JSON object.");
+                return "§c[Error] Invalid response format!";
+            }
+
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            if (!jsonObject.has("translations")) {
+                Bukkit.getLogger().warning("[Polyglot] Warning: DeepL response missing 'translations' field.");
+                return "§c[Error] Invalid response format!";
+            }
+
+            // 🔹 Obtener la traducción correcta
+            JsonElement translationsArray = jsonObject.get("translations");
+            if (!translationsArray.isJsonArray() || translationsArray.getAsJsonArray().isEmpty()) {
+                Bukkit.getLogger().warning("[Polyglot] Warning: DeepL response contains an empty translation array.");
+                return "§c[Error] No translations found!";
+            }
+
+            JsonObject translationObject = translationsArray.getAsJsonArray().get(0).getAsJsonObject();
+            if (!translationObject.has("text")) {
+                Bukkit.getLogger().warning("[Polyglot] Warning: DeepL response missing 'text' field.");
+                return "§c[Error] Invalid response format!";
+            }
+
+            String translatedText = translationObject.get("text").getAsString().trim();
+            return translatedText.isEmpty() ? "§c[Error] Empty translation result!" : translatedText;
+
+        } catch (Exception e) {
+            Bukkit.getLogger().severe("[Polyglot] JSON parsing failed: " + e.getMessage());
+            return "§c[Error] JSON parsing failed!";
         }
-        return json.substring(indexStart, indexEnd);
     }
 }

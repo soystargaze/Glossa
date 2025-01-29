@@ -5,11 +5,9 @@ import com.comphenix.protocol.ProtocolManager;
 import com.erosmari.polyglot.commands.PolyglotCommandManager;
 import com.erosmari.polyglot.config.ConfigHandler;
 import com.erosmari.polyglot.database.DatabaseHandler;
+import com.erosmari.polyglot.listeners.ChatListener;
 import com.erosmari.polyglot.listeners.ProtocolLibListener;
-import com.erosmari.polyglot.utils.AsyncExecutor;
-import com.erosmari.polyglot.utils.ConsoleUtils;
-import com.erosmari.polyglot.utils.LoggingUtils;
-import com.erosmari.polyglot.utils.TranslationHandler;
+import com.erosmari.polyglot.utils.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -141,6 +139,7 @@ public class Polyglot extends JavaPlugin implements Listener {
 
     private void registerEvents() {
         try {
+            getServer().getPluginManager().registerEvents(new ChatListener(), this);
             new ProtocolLibListener(this, protocolManager).registerPacketListeners();
         } catch (Exception e) {
             LoggingUtils.logTranslated("events.register_error", e.getMessage());

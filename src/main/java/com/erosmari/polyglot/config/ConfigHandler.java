@@ -3,13 +3,14 @@ package com.erosmari.polyglot.config;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 
 public class ConfigHandler {
 
     private static FileConfiguration config;
     private static String language;
+    private static String deepLApiKey;
+    private static String deepLApiUrl;
 
     /**
      * Configura y carga los archivos de configuración.
@@ -23,8 +24,10 @@ public class ConfigHandler {
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        // Cargar el idioma configurado
+        // Cargar valores desde config.yml
         language = config.getString("language", "en_us");
+        deepLApiKey = config.getString("deepl.api_key", "");
+        deepLApiUrl = config.getString("deepl.api_url", "https://api-free.deepl.com/v2/translate");
     }
 
     /**
@@ -44,6 +47,24 @@ public class ConfigHandler {
      */
     public static String getLanguage() {
         return language;
+    }
+
+    /**
+     * Obtiene la clave de la API de DeepL.
+     *
+     * @return Clave de la API de DeepL.
+     */
+    public static String getDeepLApiKey() {
+        return deepLApiKey;
+    }
+
+    /**
+     * Obtiene la URL de la API de DeepL.
+     *
+     * @return URL de la API de DeepL.
+     */
+    public static String getDeepLApiUrl() {
+        return deepLApiUrl;
     }
 
     /**
