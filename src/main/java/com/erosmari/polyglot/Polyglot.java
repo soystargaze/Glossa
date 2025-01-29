@@ -139,7 +139,7 @@ public class Polyglot extends JavaPlugin implements Listener {
 
     private void registerEvents() {
         try {
-            getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+            getServer().getPluginManager().registerEvents(new ChatListener(), this);
             new ProtocolLibListener(this, protocolManager).registerPacketListeners();
         } catch (Exception e) {
             LoggingUtils.logTranslated("events.register_error", e.getMessage());
