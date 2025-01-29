@@ -1,8 +1,11 @@
 package com.erosmari.polyglot;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.erosmari.polyglot.commands.PolyglotCommandManager;
 import com.erosmari.polyglot.config.ConfigHandler;
 import com.erosmari.polyglot.database.DatabaseHandler;
+import com.erosmari.polyglot.listeners.ProtocolLibListener;
 import com.erosmari.polyglot.utils.AsyncExecutor;
 import com.erosmari.polyglot.utils.ConsoleUtils;
 import com.erosmari.polyglot.utils.LoggingUtils;
@@ -16,6 +19,7 @@ public class Polyglot extends JavaPlugin implements Listener {
 
     private static Polyglot instance;
     private PolyglotCommandManager commandManager;
+    private ProtocolManager protocolManager;
 
 
     @Override
@@ -34,6 +38,7 @@ public class Polyglot extends JavaPlugin implements Listener {
 
     @SuppressWarnings("UnstableApiUsage")
     private void initializePlugin() {
+        protocolManager = ProtocolLibrary.getProtocolManager();
         loadConfigurations();
 
         ConsoleUtils.displayAsciiArt(this);
@@ -136,9 +141,14 @@ public class Polyglot extends JavaPlugin implements Listener {
 
     private void registerEvents() {
         try {
+            new ProtocolLibListener(this, protocolManager).registerPacketListeners();
         } catch (Exception e) {
             LoggingUtils.logTranslated("events.register_error", e.getMessage());
         }
+    }
+
+    public ProtocolManager getProtocolManager() {
+        return protocolManager;
     }
 
 }

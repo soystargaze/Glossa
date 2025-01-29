@@ -18,7 +18,7 @@ public class ReloadCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> register(JavaPlugin plugin) {
         return Commands.literal("reload")
-                .requires(source -> source.getSender().hasPermission("lumen.reload"))
+                .requires(source -> source.getSender().hasPermission("polyglot.reload"))
                 .executes(context -> {
                     new ReloadCommand(plugin).execute(context.getSource());
                     return 1;
@@ -42,7 +42,7 @@ public class ReloadCommand {
 
     private int reloadTranslations() {
         TranslationHandler.clearTranslations();
-        TranslationHandler.loadTranslations(plugin, plugin.getConfig().getString("language", "es_es"));
+        TranslationHandler.loadTranslations(plugin, plugin.getConfig().getString("language", "en_us"));
         return TranslationHandler.getLoadedTranslationsCount();
     }
 }

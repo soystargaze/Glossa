@@ -35,6 +35,7 @@ public class PolyglotCommandManager {
                                 return 1;
                             })
                             .then(ReloadCommand.register(plugin))
+                            .then(LangCommand.register())
                             .build()
             );
         });

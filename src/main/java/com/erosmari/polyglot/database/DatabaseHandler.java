@@ -7,9 +7,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseHandler {
 
@@ -47,23 +45,27 @@ public class DatabaseHandler {
             throw new SQLException(TranslationHandler.getFormatted("database.sqlite.error_directory", dbFolder.getAbsolutePath()));
         }
 
-        String dbFilePath = new File(dbFolder, "lumen.db").getAbsolutePath();
+        String dbFilePath = new File(dbFolder, "polyglot.db").getAbsolutePath();
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:sqlite:" + dbFilePath);
         hikariConfig.setMaximumPoolSize(10);
-        hikariConfig.setPoolName("Lumen-SQLite");
+        hikariConfig.setPoolName("Polyglot-SQLite");
 
         dataSource = new HikariDataSource(hikariConfig);
     }
 
     /**
-     * Crea las tablas necesarias para almacenar bloques iluminados.
+     * Crea las tablas necesarias.
      */
     private static void createTables() {
         try (Connection connection = getConnection(); Statement stmt = connection.createStatement()) {
-            String createPolyglotDataTable = "";
-            stmt.executeUpdate(createPolyglotDataTable);
-
+            String createPlayerLanguagesTable = """
+                CREATE TABLE IF NOT EXISTS player_languages (
+                    uuid TEXT PRIMARY KEY,
+                    language TEXT NOT NULL
+                );
+                """;
+            stmt.executeUpdate(createPlayerLanguagesTable);
         } catch (SQLException e) {
             LoggingUtils.logTranslated("database.tables.error", e.getMessage());
         }
@@ -80,6 +82,44 @@ public class DatabaseHandler {
             throw new IllegalStateException(TranslationHandler.get("database.connection.uninitialized"));
         }
         return dataSource.getConnection();
+    }
+
+    /**
+     * Guarda el idioma de un jugador en la base de datos.
+     *
+     * @param uuid UUID del jugador.
+     * @param language Idioma seleccionado.
+     */
+    public static void savePlayerLanguage(String uuid, String language) {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO player_languages (uuid, language) VALUES (?, ?) ON CONFLICT(uuid) DO UPDATE SET language = ?")) {
+            stmt.setString(1, uuid);
+            stmt.setString(2, language);
+            stmt.setString(3, language);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LoggingUtils.logTranslated("database.language.save_error", e.getMessage());
+        }
+    }
+
+    /**
+     * Recupera el idioma de un jugador desde la base de datos.
+     *
+     * @param uuid UUID del jugador.
+     * @return Idioma del jugador o "auto" si no está registrado.
+     */
+    public static String getPlayerLanguage(String uuid) {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT language FROM player_languages WHERE uuid = ?")) {
+            stmt.setString(1, uuid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("language");
+            }
+        } catch (SQLException e) {
+            LoggingUtils.logTranslated("database.language.load_error", e.getMessage());
+        }
+        return "auto";
     }
 
     /**

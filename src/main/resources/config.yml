@@ -22,3 +22,8 @@ language: "es_es"
 settings:
   # Async settings
   async_thread_pool_size: 4 # Quantity of threads used for async tasks
+
+deepl:
+  api_key: "TU_CLAVE_AQUI"
+  api_url: "https://api-free.deepl.com/v2/translate"
+  language_default: "en"

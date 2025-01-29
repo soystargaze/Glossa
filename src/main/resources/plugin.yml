@@ -5,5 +5,4 @@ api-version: '1.21'
 load: STARTUP
 authors: [Eros Marí]
 website: https://erosmari.com
-depend:
-  - ProtocolLib
+depend: [ProtocolLib]
