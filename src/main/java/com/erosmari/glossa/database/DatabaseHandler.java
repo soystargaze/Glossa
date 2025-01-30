@@ -1,7 +1,7 @@
-package com.erosmari.polyglot.database;
+package com.erosmari.glossa.database;
 
-import com.erosmari.polyglot.utils.LoggingUtils;
-import com.erosmari.polyglot.utils.TranslationHandler;
+import com.erosmari.glossa.utils.LoggingUtils;
+import com.erosmari.glossa.utils.TranslationHandler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.plugin.java.JavaPlugin;

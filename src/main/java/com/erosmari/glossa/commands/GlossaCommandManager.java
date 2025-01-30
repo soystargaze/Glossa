@@ -1,7 +1,7 @@
-package com.erosmari.polyglot.commands;
+package com.erosmari.glossa.commands;
 
-import com.erosmari.polyglot.Polyglot;
-import com.erosmari.polyglot.utils.TranslationHandler;
+import com.erosmari.glossa.Glossa;
+import com.erosmari.glossa.utils.TranslationHandler;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
@@ -9,11 +9,11 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 
 @SuppressWarnings("UnstableApiUsage")
-public class PolyglotCommandManager {
+public class GlossaCommandManager {
 
-    private final Polyglot plugin;
+    private final Glossa plugin;
 
-    public PolyglotCommandManager(Polyglot plugin) {
+    public GlossaCommandManager(Glossa plugin) {
         this.plugin = plugin;
     }
 
@@ -27,8 +27,8 @@ public class PolyglotCommandManager {
             Commands commands = event.registrar();
 
             commands.register(
-                    Commands.literal("polyglot")
-                            .requires(source -> source.getSender().hasPermission("polyglot.use"))
+                    Commands.literal("glossa")
+                            .requires(source -> source.getSender().hasPermission("glossa.use"))
                             .executes(ctx -> {
                                 CommandSourceStack source = ctx.getSource();
                                 source.getSender().sendMessage(TranslationHandler.getPlayerMessage("command.usage"));

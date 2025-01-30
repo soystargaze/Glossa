@@ -1,6 +1,6 @@
-package com.erosmari.polyglot.utils;
+package com.erosmari.glossa.utils;
 
-import com.erosmari.polyglot.database.DatabaseHandler;
+import com.erosmari.glossa.database.DatabaseHandler;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

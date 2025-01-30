@@ -1,6 +1,6 @@
-name: Polyglot
+name: Glossa
 version: '1.0-SNAPSHOT'
-main: com.erosmari.polyglot.Polyglot
+main: com.erosmari.glossa.Glossa
 api-version: '1.21'
 load: STARTUP
 authors: [Eros Marí]

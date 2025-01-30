@@ -1,7 +1,7 @@
-package com.erosmari.polyglot.commands;
+package com.erosmari.glossa.commands;
 
-import com.erosmari.polyglot.utils.LoggingUtils;
-import com.erosmari.polyglot.utils.TranslationHandler;
+import com.erosmari.glossa.utils.LoggingUtils;
+import com.erosmari.glossa.utils.TranslationHandler;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -18,7 +18,7 @@ public class ReloadCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> register(JavaPlugin plugin) {
         return Commands.literal("reload")
-                .requires(source -> source.getSender().hasPermission("polyglot.reload"))
+                .requires(source -> source.getSender().hasPermission("glossa.reload"))
                 .executes(context -> {
                     new ReloadCommand(plugin).execute(context.getSource());
                     return 1;

@@ -1,8 +1,8 @@
-package com.erosmari.polyglot.utils;
+package com.erosmari.glossa.utils;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static com.erosmari.polyglot.utils.TranslationHandler.loadedKeys;
+import static com.erosmari.glossa.utils.TranslationHandler.loadedKeys;
 
 @SuppressWarnings("ALL")
 public class ConsoleUtils {

@@ -1,9 +1,9 @@
-package com.erosmari.polyglot.utils;
+package com.erosmari.glossa.utils;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.erosmari.polyglot.config.ConfigHandler;
+import com.erosmari.glossa.config.ConfigHandler;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;

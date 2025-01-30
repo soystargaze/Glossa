@@ -1,4 +1,4 @@
-package com.erosmari.polyglot.utils;
+package com.erosmari.glossa.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;

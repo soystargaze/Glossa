@@ -1,13 +1,13 @@
-package com.erosmari.polyglot.listeners;
+package com.erosmari.glossa.listeners;
 
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
-import com.erosmari.polyglot.utils.DeepLTranslator;
-import com.erosmari.polyglot.utils.LanguageManager;
-import com.erosmari.polyglot.utils.LoggingUtils;
+import com.erosmari.glossa.utils.DeepLTranslator;
+import com.erosmari.glossa.utils.LanguageManager;
+import com.erosmari.glossa.utils.LoggingUtils;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

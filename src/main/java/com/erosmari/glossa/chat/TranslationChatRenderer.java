@@ -1,7 +1,7 @@
-package com.erosmari.polyglot.chat;
+package com.erosmari.glossa.chat;
 
-import com.erosmari.polyglot.utils.DeepLTranslator;
-import com.erosmari.polyglot.utils.LanguageManager;
+import com.erosmari.glossa.utils.DeepLTranslator;
+import com.erosmari.glossa.utils.LanguageManager;
 import io.papermc.paper.chat.ChatRenderer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;

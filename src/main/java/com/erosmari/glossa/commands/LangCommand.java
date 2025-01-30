@@ -1,7 +1,7 @@
-package com.erosmari.polyglot.commands;
+package com.erosmari.glossa.commands;
 
-import com.erosmari.polyglot.utils.LanguageManager;
-import com.erosmari.polyglot.utils.TranslationHandler;
+import com.erosmari.glossa.utils.LanguageManager;
+import com.erosmari.glossa.utils.TranslationHandler;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import com.mojang.brigadier.arguments.StringArgumentType;

@@ -1,4 +1,4 @@
-package com.erosmari.polyglot.config;
+package com.erosmari.glossa.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

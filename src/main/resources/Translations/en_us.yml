@@ -18,12 +18,12 @@
 
 plugin:
   separator: "----------------------------------------"
-  name: "Polyglot Plugin"
+  name: "Glossa Plugin"
   version: "Version: {0}"
   author: "Author: {0}"
-  enabled: "Polyglot has been enabled!"
-  disabled: "Polyglot has been disabled!"
-  enable_error: "An error occurred while enabling Polyglot: {0}"
+  enabled: "Glossa has been enabled!"
+  disabled: "Glossa has been disabled!"
+  enable_error: "An error occurred while enabling Glossa: {0}"
 
 database:
   init_error: "Database initialization failed: {0}"

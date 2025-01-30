@@ -1,6 +1,6 @@
-package com.erosmari.polyglot.utils;
+package com.erosmari.glossa.utils;
 
-import com.erosmari.polyglot.config.ConfigHandler;
+import com.erosmari.glossa.config.ConfigHandler;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -1,22 +1,22 @@
-package com.erosmari.polyglot;
+package com.erosmari.glossa;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.erosmari.polyglot.commands.PolyglotCommandManager;
-import com.erosmari.polyglot.config.ConfigHandler;
-import com.erosmari.polyglot.database.DatabaseHandler;
-import com.erosmari.polyglot.listeners.ChatListener;
-import com.erosmari.polyglot.listeners.ProtocolLibListener;
-import com.erosmari.polyglot.utils.*;
+import com.erosmari.glossa.commands.GlossaCommandManager;
+import com.erosmari.glossa.config.ConfigHandler;
+import com.erosmari.glossa.database.DatabaseHandler;
+import com.erosmari.glossa.listeners.ChatListener;
+import com.erosmari.glossa.listeners.ProtocolLibListener;
+import com.erosmari.glossa.utils.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 
-public class Polyglot extends JavaPlugin implements Listener {
+public class Glossa extends JavaPlugin implements Listener {
 
-    private static Polyglot instance;
-    private PolyglotCommandManager commandManager;
+    private static Glossa instance;
+    private GlossaCommandManager commandManager;
     private ProtocolManager protocolManager;
 
 
@@ -58,7 +58,7 @@ public class Polyglot extends JavaPlugin implements Listener {
         }
     }
 
-    public static Polyglot getInstance() {
+    public static Glossa getInstance() {
         return instance;
     }
 
@@ -128,7 +128,7 @@ public class Polyglot extends JavaPlugin implements Listener {
     private void initializeCommandManager() {
         try {
             if (commandManager == null) {
-                commandManager = new PolyglotCommandManager(this);
+                commandManager = new GlossaCommandManager(this);
                 commandManager.registerCommands();
             }
         } catch (Exception e) {
